@@ -1,0 +1,31 @@
+# N-Link
+
+> N-Link is a local, provider-agnostic memory, RAG and governance brain for AI
+> agents. It runs on the user's machine as an MCP server and gives any
+> MCP-capable AI persistent long-term memory, relevance-gated recall, a failure
+> log that prevents repeated mistakes, per-action approval governance, an
+> independent quality gate, and cross-AI task handoff. Memories live in a local
+> SQLite database and never leave the user's machine.
+
+Key facts:
+- Works with any MCP client: Claude Code, Claude Desktop, Cursor, Cline, Windsurf, others.
+- Model-agnostic: the brain serves its own operating protocol to every AI that
+  connects, so a session started with one model (Claude, Gemini, GPT) can be
+  continued by another from the exact task state the previous one left.
+- 28 brain tools over MCP: session bootstrap, task analysis, deployment
+  planning, approval tiers, quality council, memory and learning, operations.
+- Privacy: all memory is local (SQLite); the default mode sends nothing
+  anywhere. The optional premium engine mode sends only the analyzed task text
+  to a user-configured, authenticated endpoint.
+- Quality: work is scored against a fixed 10-criterion gate; critical work is
+  judged by independent AI auditors (never self-scored) and can be audited
+  cross-model.
+- Governance: side-effectful actions are risk-tiered; critical, irreversible
+  actions (money, contracts, deletion) are locked to explicit owner approval.
+- Open-core: the shipped core is readable source with an honest basic engine;
+  the proprietary N-Language engine (the technology that understands the true
+  intent behind words) is served remotely and fails closed.
+- Status: private beta. Waitlist on the landing page.
+
+## Pages
+- [Landing page](https://tnkfreelance.github.io/nlink-site/): product overview, how it works, FAQ (EN/JA).

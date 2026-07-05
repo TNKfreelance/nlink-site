@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>N-Link — The working brain for AI agents | AIエージェントのワーキングブレイン</title>
+<meta name="description" content="N-Link is a local, provider-agnostic memory, RAG and governance brain for AI agents. It runs on your machine as an MCP server: persistent memory, mistake avoidance, approval governance, independent quality audits, and cross-AI task handoff. Local. Private. Yours." />
+<!-- SET-ON-DEPLOY: replace tnkfreelance.github.io/nlink-site in canonical/og:url/sitemap.xml/robots.txt once the domain is chosen (see DEPLOY.md) -->
+<link rel="canonical" href="https://tnkfreelance.github.io/nlink-site/" />
+<meta property="og:url" content="https://tnkfreelance.github.io/nlink-site/" />
+<meta property="og:title" content="N-Link — The working brain for AI agents" />
+<meta property="og:description" content="A local, provider-agnostic memory / RAG / governance brain for AI agents. It remembers, decides and enforces quality — on your machine, under your control." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="N-Link" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="N-Link — The working brain for AI agents" />
+<meta name="twitter:description" content="Local, private, yours. Persistent memory, mistake avoidance, approval governance and independent quality audits for any MCP-capable AI." />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "N-Link",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "macOS, Linux, Windows",
+      "description": "N-Link is a local, provider-agnostic memory, RAG and governance brain for AI agents. It runs as a local MCP server and gives any MCP-capable AI persistent memory, relevance-gated recall, a failure log that prevents repeated mistakes, per-action approval tiers, an independent quality gate, and cross-AI task handoff. Memories stay in a local database on the user's machine.",
+      "softwareRequirements": "An MCP-capable AI client (Claude Code, Claude Desktop, Cursor, Cline, Windsurf, and others); Python 3.10+",
+      "releaseNotes": "Private beta — waitlist open.",
+      "author": { "@type": "Organization", "name": "N-Series" }
+    },
+    {
+      "@type": "Organization",
+      "name": "N-Series",
+      "description": "N-Series builds N-Link, the working brain for AI agents, and related proprietary AI infrastructure."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is N-Link?",
+          "acceptedAnswer": { "@type": "Answer", "text": "N-Link is a local, provider-agnostic memory, RAG and governance brain for AI agents. It runs on your own machine as an MCP server and gives any MCP-capable AI persistent long-term memory, relevance-gated recall, mistake avoidance, approval governance and an independent quality gate. Your memories never leave your machine." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does my data leave my machine?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. All memories and learning live in a local SQLite database on your machine. In the default local mode nothing is sent anywhere. The optional premium engine mode sends only the analyzed task text to the endpoint you configure, over an authenticated connection; the database itself never leaves your machine." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which AI tools does N-Link work with?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Any MCP-capable client: Claude Code, Claude Desktop, Cursor, Cline, Windsurf and others. N-Link is model-agnostic — a session started with one AI model can be continued by another, because the brain, not the model, holds the memory, protocol and task state." }
+        },
+        {
+          "@type": "Question",
+          "name": "How does N-Link stop an AI from repeating its mistakes?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Every failure is recorded in an immutable failure log. Before new work starts, N-Link recalls past failures that are genuinely relevant to the task (relevance-gated, so unrelated history never pollutes context) and injects them as things to avoid, together with the solutions that fixed them." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the quality gate?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Work is scored against a fixed 10-criterion rubric before it may be called done. Critical work is judged by independent auditors — separate AI agents, or even a different AI model — never by the same agent that wrote it, because self-review drifts lenient. Failed work goes back for rework; only passing work is stored as a reusable success." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a different AI continue my task where the last one stopped?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. N-Link records task state automatically as work happens. Any AI that connects to the same brain can call one tool and receive the previous task, its plan overview, what was done, what is open and the recommended next step." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is N-Link open source?",
+          "acceptedAnswer": { "@type": "Answer", "text": "N-Link is open-core. The distributed core ships readable source with an honest built-in basic engine. The proprietary N-Language engine — the technology that understands the true intent behind words — is not distributed; it is available as a hosted premium service, and the client fails closed rather than silently degrading." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is N-Language?",
+          "acceptedAnswer": { "@type": "Answer", "text": "N-Language is N-Link's proprietary technology for understanding the true intent behind words. It drives intent analysis, memory importance and task-specific persona selection. Implementation details are not disclosed; the shipped product uses it through a hosted engine, and a clearly-labeled basic engine works offline." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do approvals work?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Every side-effectful action is classified into a risk tier before it runs. Routine actions can auto-approve; critical, irreversible actions — money, contracts, deletion — always require the owner's explicit approval and can never be auto-approved, by a locked policy." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get N-Link?",
+          "acceptedAnswer": { "@type": "Answer", "text": "N-Link is currently in private beta. Join the waitlist on this page and you will be contacted when access opens." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-lang="ja">
+
+<canvas id="quantum-field" aria-hidden="true"></canvas>
+
+<div class="hud" aria-hidden="true">
+  <span class="hud__corner hud__corner--tl"></span>
+  <span class="hud__corner hud__corner--tr"></span>
+  <span class="hud__corner hud__corner--bl"></span>
+  <span class="hud__corner hud__corner--br"></span>
+  <span class="hud__edge hud__edge--bl"><i class="hud__dot"></i>SYS · ONLINE</span>
+  <span class="hud__edge hud__edge--br">MCP · STDIO · 127.0.0.1</span>
+  <span class="hud__edge hud__edge--right">N — SERIES // 2026</span>
+</div>
+
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top" aria-label="N-Link home">
+    <span class="nav__mark">N-Link</span>
+    <span class="nav__series">N&nbsp;SERIES</span>
+  </a>
+  <nav class="nav__links" aria-label="primary">
+    <a href="#flagship" data-ja="N-Link" data-en="N-Link">N-Link</a>
+    <a href="#how" data-ja="仕組み" data-en="How it works">仕組み</a>
+    <a href="#products" data-ja="プロダクト" data-en="Products">プロダクト</a>
+    <a href="#faq" data-ja="FAQ" data-en="FAQ">FAQ</a>
+    <a href="#waitlist" data-ja="登録" data-en="Waitlist">登録</a>
+  </nav>
+  <div class="nav__actions">
+    <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch language">
+      <span class="lang-toggle__opt is-active" data-lang-opt="ja">JA</span>
+      <span class="lang-toggle__sep">/</span>
+      <span class="lang-toggle__opt" data-lang-opt="en">EN</span>
+    </button>
+    <a href="#waitlist" class="btn btn--ghost" data-ja="ウェイトリスト" data-en="Join waitlist">ウェイトリスト</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" id="hero">
+    <canvas id="hero-3d" aria-hidden="true"></canvas>
+    <div class="hero__inner">
+      <p class="hero__eyebrow reveal" data-ja="N — シリーズ / ローカルで動くAIの脳" data-en="N — series / a brain that runs on your machine">N — シリーズ / ローカルで動くAIの脳</p>
+      <h1 class="hero__title reveal">N-Link</h1>
+      <p class="hero__lede reveal" data-ja="AIエージェントのワーキングブレイン。記憶し、判断し、実行する — すべてあなたの管理下で。" data-en="The working brain for AI agents. It remembers, decides, and executes — all under your control.">AIエージェントのワーキングブレイン。記憶し、判断し、実行する — すべてあなたの管理下で。</p>
+      <div class="hero__cta reveal">
+        <a href="#waitlist" class="btn btn--primary" data-ja="ウェイトリストに参加" data-en="Join the waitlist">ウェイトリストに参加</a>
+        <a href="#flagship" class="btn btn--line" data-ja="N-Linkを見る" data-en="See N-Link">N-Linkを見る</a>
+      </div>
+      <p class="hero__tag reveal" data-ja="ローカル。プライベート。あなたのもの。" data-en="Local. Private. Yours.">ローカル。プライベート。あなたのもの。</p>
+    </div>
+    <div class="hero__scroll" aria-hidden="true">
+      <span data-ja="スクロール" data-en="Scroll">スクロール</span>
+      <span class="hero__scroll-line"></span>
+    </div>
+  </section>
+
+  <section class="flagship" id="flagship">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-ja="目玉商品" data-en="Flagship">目玉商品</span>
+      <h2 data-ja="エージェントが賢くなるのは、忘れないからだ" data-en="Agents get smarter when they stop forgetting">エージェントが賢くなるのは、忘れないからだ</h2>
+      <p class="section-sub" data-ja="N-Linkは静的な第二の脳ではない。エージェントが作業中に使う、生きたワーキングブレインだ。" data-en="N-Link is not a static second brain. It is a living working brain an agent uses while it works.">N-Linkは静的な第二の脳ではない。エージェントが作業中に使う、生きたワーキングブレインだ。</p>
+    </div>
+    <div class="value-grid">
+      <article class="value-card reveal">
+        <div class="value-card__node" aria-hidden="true"></div>
+        <h3 data-ja="エラー回避" data-en="Error avoidance">エラー回避</h3>
+        <p data-ja="過去の失敗を記憶し、同じ間違いを繰り返させない。一度踏んだ地雷は二度と踏まない。" data-en="It remembers past failures so the agent never repeats them. A mine stepped on once is never stepped on again.">過去の失敗を記憶し、同じ間違いを繰り返させない。一度踏んだ地雷は二度と踏まない。</p>
+      </article>
+      <article class="value-card reveal">
+        <div class="value-card__node" aria-hidden="true"></div>
+        <h3 data-ja="コンテキスト削減" data-en="Context efficiency">コンテキスト削減</h3>
+        <p data-ja="必要な記憶だけを的確に引き出す。文脈の浪費を抑え、トークンを無駄にしない。" data-en="It surfaces only the memory that matters, cutting context waste and saving tokens.">必要な記憶だけを的確に引き出す。文脈の浪費を抑え、トークンを無駄にしない。</p>
+      </article>
+      <article class="value-card reveal">
+        <div class="value-card__node" aria-hidden="true"></div>
+        <h3 data-ja="承認ガバナンス" data-en="Approval governance">承認ガバナンス</h3>
+        <p data-ja="リスク階層で行動をゲートする。重大・不可逆な操作はあなたの承認なしに実行されない。" data-en="It gates actions by risk tier. Nothing serious or irreversible runs without your approval.">リスク階層で行動をゲートする。重大・不可逆な操作はあなたの承認なしに実行されない。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-ja="仕組み" data-en="How it works">仕組み</span>
+      <h2 data-ja="4つの働きが、ひとつの脳になる" data-en="Four functions, one brain">4つの働きが、ひとつの脳になる</h2>
+    </div>
+    <div class="pipeline reveal" role="img" aria-label="Pipeline: the brain remembers, the persona executes, the ticket sets the standard, the audit enforces it.">
+      <div class="pipe-step">
+        <div class="pipe-step__orb" aria-hidden="true"><span></span></div>
+        <span class="pipe-step__no">01</span>
+        <h3 data-ja="記憶する" data-en="Remember">記憶する</h3>
+        <p data-ja="脳が憶えている" data-en="The brain remembers">脳が憶えている</p>
+      </div>
+      <div class="pipe-link" aria-hidden="true"></div>
+      <div class="pipe-step">
+        <div class="pipe-step__orb" aria-hidden="true"><span></span></div>
+        <span class="pipe-step__no">02</span>
+        <h3 data-ja="実行する" data-en="Execute">実行する</h3>
+        <p data-ja="人格が遂行する" data-en="The persona executes">人格が遂行する</p>
+      </div>
+      <div class="pipe-link" aria-hidden="true"></div>
+      <div class="pipe-step">
+        <div class="pipe-step__orb" aria-hidden="true"><span></span></div>
+        <span class="pipe-step__no">03</span>
+        <h3 data-ja="基準を定める" data-en="Set the standard">基準を定める</h3>
+        <p data-ja="チケットが水準を決める" data-en="The ticket sets the standard">チケットが水準を決める</p>
+      </div>
+      <div class="pipe-link" aria-hidden="true"></div>
+      <div class="pipe-step">
+        <div class="pipe-step__orb" aria-hidden="true"><span></span></div>
+        <span class="pipe-step__no">04</span>
+        <h3 data-ja="監査する" data-en="Enforce">監査する</h3>
+        <p data-ja="監査が品質を守る" data-en="The audit enforces it">監査が品質を守る</p>
+      </div>
+    </div>
+    <p class="how__creed reveal" data-ja="脳が憶え、人格が動き、チケットが水準を決め、監査が守る。決めるのは、あなただ。" data-en="The brain remembers, the persona executes, the ticket sets the standard, the audit enforces it. You decide.">脳が憶え、人格が動き、チケットが水準を決め、監査が守る。決めるのは、あなただ。</p>
+  </section>
+
+  <section class="code" id="code">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-ja="接続" data-en="Connect">接続</span>
+      <h2 data-ja="任意のAIクライアントに、1つの設定で繋がる" data-en="Connect to any AI client with one config">任意のAIクライアントに、1つの設定で繋がる</h2>
+      <p class="section-sub" data-ja="N-LinkはローカルのMCPサーバー。プロバイダーに依存しない。" data-en="N-Link is a local MCP server. Provider-agnostic by design.">N-LinkはローカルのMCPサーバー。プロバイダーに依存しない。</p>
+    </div>
+    <div class="code-block reveal">
+      <div class="code-block__bar" aria-hidden="true">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="code-block__name">claude_desktop_config.json</span>
+      </div>
+<pre><code>{
+  <span class="tok-key">"mcpServers"</span>: {
+    <span class="tok-key">"n-link-brain"</span>: {
+      <span class="tok-key">"command"</span>: <span class="tok-str">"python3"</span>,
+      <span class="tok-key">"args"</span>: [<span class="tok-str">"/path/to/brain_server.py"</span>],
+      <span class="tok-key">"env"</span>: { <span class="tok-key">"NLINK_HOME"</span>: <span class="tok-str">"~/.n-link"</span> }
+    }
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <section class="products" id="products">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-ja="プロダクト" data-en="Products">プロダクト</span>
+      <h2 data-ja="N-シリーズ" data-en="The N-series">N-シリーズ</h2>
+      <p class="section-sub" data-ja="すべての作品は N- から始まる。" data-en="Every product begins with N-.">すべての作品は N- から始まる。</p>
+    </div>
+    <div class="product-grid">
+      <article class="product-card product-card--feature reveal">
+        <div class="product-card__top">
+          <span class="product-card__tag" data-ja="目玉" data-en="Flagship">目玉</span>
+          <span class="product-card__status status--soon" data-ja="準備中" data-en="Coming soon">準備中</span>
+        </div>
+        <h3>N-Link</h3>
+        <p data-ja="AIエージェントのワーキングブレイン。ローカルMCP。記憶・判断・承認ガバナンスを1つに。" data-en="The working brain for AI agents. A local MCP that unifies memory, judgment, and approval governance.">AIエージェントのワーキングブレイン。ローカルMCP。記憶・判断・承認ガバナンスを1つに。</p>
+        <a href="#waitlist" class="btn btn--primary btn--block" data-ja="ウェイトリストに参加" data-en="Join the waitlist">ウェイトリストに参加</a>
+      </article>
+      <article class="product-card reveal">
+        <div class="product-card__top">
+          <span class="product-card__tag" data-ja="スキル" data-en="Skills">スキル</span>
+          <span class="product-card__status status--soon" data-ja="準備中" data-en="Coming soon">準備中</span>
+        </div>
+        <h3>N-Skills</h3>
+        <p data-ja="現場で磨いたオリジナルのスキル群。買い切りで導入できる。" data-en="Original, battle-tested skills. Available as a one-time purchase.">現場で磨いたオリジナルのスキル群。買い切りで導入できる。</p>
+        <!-- LEMON SQUEEZY: replace href with the product/checkout URL once issued -->
+        <a href="#" class="btn btn--line btn--block" data-ja="購入する" data-en="Buy">購入する</a>
+      </article>
+      <article class="product-card reveal">
+        <div class="product-card__top">
+          <span class="product-card__tag" data-ja="送信" data-en="Transmission">送信</span>
+          <span class="product-card__status status--soon" data-ja="準備中" data-en="Coming soon">準備中</span>
+        </div>
+        <h3>N-Cast</h3>
+        <p data-ja="自律マルチチャネル送信技術。他にはない配信の自動化を。" data-en="Autonomous multi-channel transmission. Publishing automation you won't find elsewhere.">自律マルチチャネル送信技術。他にはない配信の自動化を。</p>
+        <a href="#waitlist" class="btn btn--line btn--block" data-ja="詳細を見る" data-en="Learn more">詳細を見る</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="trust" id="trust">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-ja="信頼の理由" data-en="Why trust N-Link">信頼の理由</span>
+      <h2 data-ja="主張ではなく、構造で信頼を担保する" data-en="Trust earned by architecture, not claims">主張ではなく、構造で信頼を担保する</h2>
+    </div>
+    <ul class="trust__grid reveal">
+      <li class="trust__chip">
+        <span class="trust__k">01</span>
+        <h3 data-ja="ローカル実行" data-en="Local-first">ローカル実行</h3>
+        <p data-ja="データは端末から出ない。クラウド送信なし。" data-en="Your data never leaves your machine. No cloud upload.">データは端末から出ない。クラウド送信なし。</p>
+      </li>
+      <li class="trust__chip">
+        <span class="trust__k">02</span>
+        <h3 data-ja="MCP標準" data-en="MCP standard">MCP標準</h3>
+        <p data-ja="任意のAIクライアントに接続。プロバイダー非依存。" data-en="Connects to any AI client. Provider-agnostic.">任意のAIクライアントに接続。プロバイダー非依存。</p>
+      </li>
+      <li class="trust__chip">
+        <span class="trust__k">03</span>
+        <h3 data-ja="承認ガバナンス" data-en="Approval governance">承認ガバナンス</h3>
+        <p data-ja="重大・不可逆な操作はあなたの承認なしに実行されない。" data-en="Nothing serious or irreversible runs without your approval.">重大・不可逆な操作はあなたの承認なしに実行されない。</p>
+      </li>
+      <li class="trust__chip">
+        <span class="trust__k">04</span>
+        <h3 data-ja="事実ベース" data-en="Fact-based">事実ベース</h3>
+        <p data-ja="幻を作らない。確認できることだけを述べる。" data-en="No fabrication. It states only what it can verify.">幻を作らない。確認できることだけを述べる。</p>
+      </li>
+    </ul>
+    <div class="trust__logos reveal" role="group" aria-label="Partner logos coming soon">
+      <span class="trust__logos-label" data-ja="導入パートナー" data-en="Partners">導入パートナー</span>
+      <span class="trust__slot"></span>
+      <span class="trust__slot"></span>
+      <span class="trust__slot"></span>
+      <span class="trust__slot"></span>
+      <span class="trust__logos-soon" data-ja="準備中" data-en="Coming soon">準備中</span>
+    </div>
+  </section>
+
+  <section class="knowledge" id="about">
+    <div class="knowledge__inner">
+      <div class="i18n-en">
+        <h2>What is N-Link?</h2>
+        <p><strong>N-Link is a local, provider-agnostic memory, RAG and governance brain for AI agents.</strong>
+        It runs on your own machine as an MCP server. Any MCP-capable AI — Claude Code, Claude Desktop,
+        Cursor, Cline, Windsurf and others — connects to it and gains persistent long-term memory,
+        relevance-gated recall, a failure log that prevents repeated mistakes, per-action approval
+        governance, an independent quality gate, and cross-AI task handoff. Your memories live in a
+        local SQLite database and never leave your machine.</p>
+        <p>The executor is replaceable; the brain is the constant. Switch the AI model mid-project and
+        the next model resumes from the same memory, the same operating protocol, and the exact task
+        state the previous one left — N-Link serves its own model-agnostic protocol to every AI that
+        connects, so behavior does not depend on which model is attached.</p>
+        <h3>Key facts</h3>
+        <ul>
+          <li>28 brain tools over MCP: session bootstrap, task analysis, deployment planning, approval tiers, quality council, memory and learning, operations.</li>
+          <li>Works with any MCP client; model-agnostic by design (Claude, Gemini, GPT — the brain stays the same).</li>
+          <li>All memory is local (SQLite). Default mode sends nothing anywhere.</li>
+          <li>Open-core: readable shipped source with an honest basic engine; the proprietary N-Language engine is served remotely and fails closed — it never silently degrades.</li>
+          <li>Critical work is audited by independent AI auditors — never self-scored.</li>
+          <li>Status: private beta. The waitlist below is the way in.</li>
+        </ul>
+        <h3>N-Link vs a typical AI memory plugin</h3>
+        <table>
+          <thead><tr><th>Capability</th><th>Typical memory plugin</th><th>N-Link</th></tr></thead>
+          <tbody>
+            <tr><td>Memory</td><td>Stores and retrieves notes</td><td>Relevance-gated recall — unrelated history never pollutes context</td></tr>
+            <tr><td>Mistakes</td><td>Repeats them</td><td>Immutable failure log, recalled exactly when relevant</td></tr>
+            <tr><td>Quality</td><td>Trusts the model's self-review</td><td>Fixed 10-criterion gate, scored by independent auditors</td></tr>
+            <tr><td>Risky actions</td><td>No concept of risk</td><td>Approval tiers; critical actions locked to explicit owner approval</td></tr>
+            <tr><td>Switching models</td><td>Context is lost</td><td>Cross-AI handoff: the next model resumes the task where the last one stopped</td></tr>
+          </tbody>
+        </table>
+        <h3>What people use N-Link for</h3>
+        <p><strong>Long-running development projects.</strong> A coding agent that works on the same
+        codebase for weeks stops re-learning it every session. N-Link recalls the decisions already
+        made, the constraints already discovered, and the failures already paid for — so session
+        twenty starts where session nineteen ended, not from zero.</p>
+        <p><strong>Teams that switch between AI models.</strong> Use one model for implementation and
+        another for review or design. Because the protocol, memory and task state live in the brain,
+        every model behaves by the same rules and picks up the same context — the executor becomes a
+        choice, not a lock-in.</p>
+        <p><strong>Work that cannot afford silent mistakes.</strong> Deployments, migrations,
+        customer-facing content. The approval tiers stop an agent from taking irreversible actions on
+        its own, and the independent quality gate catches what the writing agent cannot see in its
+        own work — the same blind spot that makes human self-review unreliable.</p>
+        <p><strong>Agents that must genuinely improve.</strong> Every recorded failure becomes a
+        guard rail; every audited success becomes a reusable pattern. The longer N-Link runs, the
+        more of your project's hard-won knowledge it carries — and it carries it locally, on your
+        machine, not in someone else's cloud.</p>
+      </div>
+      <div class="i18n-ja">
+        <h2>N-Linkとは</h2>
+        <p><strong>N-Linkは、AIエージェントのためのローカルで動くプロバイダ非依存の記憶・RAG・ガバナンス脳です。</strong>
+        あなたのマシン上でMCPサーバーとして動作し、MCP対応のAI(Claude Code、Claude Desktop、Cursor、
+        Cline、Windsurfなど)が接続すると、永続的な長期記憶、関連度ゲート付きの想起、同じ失敗を繰り返させない
+        失敗ログ、アクション単位の承認ガバナンス、独立監査による品質ゲート、AI間のタスク引き継ぎを獲得します。
+        記憶はローカルのSQLiteデータベースに保存され、マシンの外へは出ません。</p>
+        <p>実行者(AIモデル)は交換可能、脳は不変——それがN-Linkの設計思想です。プロジェクトの途中でモデルを
+        切り替えても、次のモデルは同じ記憶・同じ運用プロトコル・直前のタスク状態から再開します。接続した
+        すべてのAIに脳自身がモデル非依存のプロトコルを配るため、挙動がモデルに依存しません。</p>
+        <h3>基本情報</h3>
+        <ul>
+          <li>MCP経由の28ツール: セッション起動、タスク分析、配置計画、承認tier、品質評議会、記憶と学習、運用。</li>
+          <li>任意のMCPクライアントで動作。モデル非依存設計(Claude、Gemini、GPT——脳は同じ)。</li>
+          <li>記憶は完全ローカル(SQLite)。既定モードでは何も外部送信しません。</li>
+          <li>オープンコア: 配布版は可読ソース+正直なベーシックエンジン。独自のN言語エンジンはリモート提供で、障害時は明示エラー(無断劣化しない)。</li>
+          <li>重要な作業は独立したAI監査官が採点——自己採点はしません。</li>
+          <li>現在プライベートベータ。参加は下のウェイトリストから。</li>
+        </ul>
+        <h3>一般的なAIメモリプラグインとの違い</h3>
+        <table>
+          <thead><tr><th>能力</th><th>一般的なメモリプラグイン</th><th>N-Link</th></tr></thead>
+          <tbody>
+            <tr><td>記憶</td><td>ノートの保存と取得</td><td>関連度ゲート付き想起——無関係な履歴が文脈を汚さない</td></tr>
+            <tr><td>失敗</td><td>繰り返す</td><td>不変の失敗ログを、関連する瞬間にだけ想起</td></tr>
+            <tr><td>品質</td><td>モデルの自己レビュー頼み</td><td>固定10基準ゲート+独立監査官の採点</td></tr>
+            <tr><td>危険な操作</td><td>リスクの概念がない</td><td>承認tier制。重大操作はオーナーの明示承認にロック</td></tr>
+            <tr><td>モデル切替</td><td>文脈が消える</td><td>AI間引き継ぎ: 次のモデルが直前の状態から再開</td></tr>
+          </tbody>
+        </table>
+        <h3>N-Linkの使いどころ</h3>
+        <p><strong>長期の開発プロジェクト。</strong>同じコードベースに何週間も取り組むコーディングエージェントが、
+        毎セッションの学び直しをやめられます。決定済みの設計、発見済みの制約、代償を払って学んだ失敗をN-Linkが
+        想起するため、20回目のセッションは19回目の続きから始まります——ゼロからではなく。</p>
+        <p><strong>複数のAIモデルを使い分けるチーム。</strong>実装はあるモデル、レビューや設計は別のモデル。
+        プロトコル・記憶・タスク状態は脳側にあるため、どのモデルも同じルールで動き、同じ文脈を引き継ぎます。
+        実行者は「選択肢」になり、「ロックイン」ではなくなります。</p>
+        <p><strong>静かな失敗が許されない作業。</strong>デプロイ、移行、顧客向けコンテンツ。承認tierが
+        エージェント単独での不可逆操作を止め、独立品質ゲートが「書いた本人には見えない欠陥」を捕まえます——
+        人間の自己レビューが当てにならないのと同じ盲点です。</p>
+        <p><strong>本当に成長すべきエージェント。</strong>記録された失敗はガードレールに、監査を通った成功は
+        再利用可能なパターンになります。N-Linkが長く動くほど、プロジェクトの苦労して得た知見を多く運びます——
+        しかもローカルで、あなたのマシンの上で。誰かのクラウドではなく。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="knowledge knowledge--faq" id="faq">
+    <div class="knowledge__inner">
+      <div class="i18n-en">
+        <h2>Frequently asked questions</h2>
+        <details><summary>What is N-Link?</summary><p>N-Link is a local, provider-agnostic memory, RAG and governance brain for AI agents. It runs on your own machine as an MCP server and gives any MCP-capable AI persistent long-term memory, relevance-gated recall, mistake avoidance, approval governance and an independent quality gate. Your memories never leave your machine.</p></details>
+        <details><summary>Does my data leave my machine?</summary><p>No. All memories and learning live in a local SQLite database on your machine. In the default local mode nothing is sent anywhere. The optional premium engine mode sends only the analyzed task text to the endpoint you configure, over an authenticated connection; the database itself never leaves your machine.</p></details>
+        <details><summary>Which AI tools does N-Link work with?</summary><p>Any MCP-capable client: Claude Code, Claude Desktop, Cursor, Cline, Windsurf and others. N-Link is model-agnostic — a session started with one AI model can be continued by another, because the brain, not the model, holds the memory, protocol and task state.</p></details>
+        <details><summary>How does N-Link stop an AI from repeating its mistakes?</summary><p>Every failure is recorded in an immutable failure log. Before new work starts, N-Link recalls past failures that are genuinely relevant to the task — relevance-gated, so unrelated history never pollutes context — and injects them as things to avoid, together with the solutions that fixed them.</p></details>
+        <details><summary>What is the quality gate?</summary><p>Work is scored against a fixed 10-criterion rubric before it may be called done. Critical work is judged by independent auditors — separate AI agents, or even a different AI model — never by the same agent that wrote it, because self-review drifts lenient. Failed work goes back for rework; only passing work is stored as a reusable success.</p></details>
+        <details><summary>Can a different AI continue my task where the last one stopped?</summary><p>Yes. N-Link records task state automatically as work happens. Any AI that connects to the same brain can call one tool and receive the previous task, its plan overview, what was done, what is open and the recommended next step.</p></details>
+        <details><summary>Is N-Link open source?</summary><p>N-Link is open-core. The distributed core ships readable source with an honest built-in basic engine. The proprietary N-Language engine is not distributed; it is available as a hosted premium service, and the client fails closed rather than silently degrading.</p></details>
+        <details><summary>What is N-Language?</summary><p>N-Language is N-Link's proprietary technology for understanding the true intent behind words. It drives intent analysis, memory importance and task-specific persona selection. Implementation details are not disclosed; the shipped product uses it through a hosted engine, and a clearly-labeled basic engine works offline.</p></details>
+        <details><summary>How do approvals work?</summary><p>Every side-effectful action is classified into a risk tier before it runs. Routine actions can auto-approve; critical, irreversible actions — money, contracts, deletion — always require the owner's explicit approval and can never be auto-approved, by a locked policy.</p></details>
+        <details><summary>How do I get N-Link?</summary><p>N-Link is currently in private beta. Join the waitlist on this page and you will be contacted when access opens.</p></details>
+      </div>
+      <div class="i18n-ja">
+        <h2>よくある質問</h2>
+        <details><summary>N-Linkとは何ですか?</summary><p>N-Linkは、AIエージェントのためのローカルで動くプロバイダ非依存の記憶・RAG・ガバナンス脳です。あなたのマシン上でMCPサーバーとして動作し、MCP対応のAIに永続的な長期記憶、関連度ゲート付き想起、失敗回避、承認ガバナンス、独立監査の品質ゲートを与えます。記憶はマシンの外に出ません。</p></details>
+        <details><summary>データはマシンの外に出ますか?</summary><p>出ません。記憶と学習はすべてローカルのSQLiteデータベースに保存されます。既定のローカルモードでは何も送信しません。任意のプレミアムエンジンモードでも、送られるのは解析対象のタスク文だけで、送信先はあなたが設定したエンドポイント、認証付き接続です。データベース自体がマシンを離れることはありません。</p></details>
+        <details><summary>どのAIツールで使えますか?</summary><p>MCP対応クライアントすべてで使えます: Claude Code、Claude Desktop、Cursor、Cline、Windsurfなど。N-Linkはモデル非依存で、あるモデルで始めたセッションを別のモデルが続行できます。記憶・プロトコル・タスク状態を持つのはモデルではなく脳だからです。</p></details>
+        <details><summary>どうやってAIに同じ失敗を繰り返させないのですか?</summary><p>すべての失敗は不変の失敗ログに記録されます。新しい作業の前に、N-Linkはそのタスクに本当に関連する過去の失敗だけを想起し(関連度ゲートで無関係な履歴は混ざりません)、回避事項として修正済みの解決策と一緒に注入します。</p></details>
+        <details><summary>品質ゲートとは何ですか?</summary><p>作業は固定の10基準ルーブリックで採点されるまで「完了」になりません。重要な作業は独立監査官——別のAIエージェント、時には別のAIモデル——が採点します。書いた本人は採点しません。自己レビューは必ず甘くなるからです。不合格は差し戻し、合格した作業だけが再利用可能な成功として保存されます。</p></details>
+        <details><summary>別のAIが前のAIの続きから作業できますか?</summary><p>できます。N-Linkは作業の進行に伴いタスク状態を自動記録します。同じ脳に接続したAIはツールを1つ呼ぶだけで、直前のタスク、計画概要、完了事項、未解決事項、推奨される次の一手を受け取れます。</p></details>
+        <details><summary>オープンソースですか?</summary><p>オープンコアです。配布されるコアは可読ソースで、正直なベーシックエンジンを内蔵します。独自のN言語エンジンは配布されず、ホスト型プレミアムサービスとして提供されます。障害時にクライアントは明示的に停止し、無断で劣化することはありません。</p></details>
+        <details><summary>N言語とは何ですか?</summary><p>N言語は、言葉の裏にある真意を理解するN-Link独自の技術です。意図分析、記憶の重要度、タスク特化ペルソナの選定を駆動します。実装の詳細は非公開です。製品はホスト型エンジン経由で利用し、オフラインでは明示ラベル付きのベーシックエンジンが動作します。</p></details>
+        <details><summary>承認はどう機能しますか?</summary><p>副作用のあるすべてのアクションは実行前にリスクtierへ分類されます。定型作業は自動承認できますが、重大で不可逆なアクション——金銭、契約、削除——は常にオーナーの明示承認が必要で、ロックされたポリシーにより自動承認は不可能です。</p></details>
+        <details><summary>N-Linkはどうすれば使えますか?</summary><p>現在プライベートベータです。このページのウェイトリストに登録いただくと、アクセス開放時にご連絡します。</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="waitlist" id="waitlist">
+    <div class="waitlist__card reveal">
+      <span class="eyebrow" data-ja="アクセス申請" data-en="Request access">アクセス申請</span>
+      <h2 data-ja="N-Linkの早期アクセスに登録する" data-en="Get early access to N-Link">N-Linkの早期アクセスに登録する</h2>
+      <p class="section-sub" data-ja="メールを登録すると、ライセンスキーの発行準備が整い次第ご連絡します。" data-en="Leave your email and we'll reach out as soon as your license key is ready.">メールを登録すると、ライセンスキーの発行準備が整い次第ご連絡します。</p>
+      <form class="waitlist__form" action="#" method="POST" id="waitlist-form" novalidate>
+        <label class="sr-only" for="email" data-ja="メールアドレス" data-en="Email address">メールアドレス</label>
+        <input type="email" id="email" name="email" required
+               placeholder="name@example.com"
+               data-ja-placeholder="name@example.com" data-en-placeholder="name@example.com" />
+        <button type="submit" class="btn btn--primary" data-ja="登録する" data-en="Join">登録する</button>
+      </form>
+      <p class="waitlist__note" id="waitlist-note" data-ja="スパムは送りません。いつでも解除できます。" data-en="No spam. Unsubscribe anytime.">スパムは送りません。いつでも解除できます。</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__row">
+    <span class="footer__brand">N-Link</span>
+    <span class="footer__creed" data-ja="ローカル。プライベート。あなたのもの。" data-en="Local. Private. Yours.">ローカル。プライベート。あなたのもの。</span>
+  </div>
+  <div class="footer__row footer__row--fine">
+    <span>© 2026 N-Series</span>
+    <span data-ja="独自技術 — 無断複製・模倣を禁ず" data-en="Proprietary technology — all rights reserved">独自技術 — 無断複製・模倣を禁ず</span>
+  </div>
+</footer>
+
+<script src="js/i18n.js" defer></script>
+<script src="js/waitlist.js" defer></script>
+<script src="js/vendor/three.min.js" defer></script>
+<script src="js/hero3d.js" defer></script>
+<script src="js/quantum.js" defer></script>
+</body>
+</html>
