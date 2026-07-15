@@ -4,7 +4,7 @@
   // Web3Forms access key. Empty = the intake is not wired yet; the form then
   // shows an honest "opening shortly" message instead of pretending to submit.
   // Set the key (issued to the owner's address at web3forms.com) and redeploy.
-  var WEB3FORMS_KEY = "";
+  var WEB3FORMS_KEY = "3881f166-797c-47f7-9e95-67c412ba795e";
   var ENDPOINT = "https://api.web3forms.com/submit";
 
   var form = document.getElementById("waitlist-form");
